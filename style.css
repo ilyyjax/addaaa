@@ -1,0 +1,135 @@
+/* Basic reset + layout */
+:root{
+  --bg: #0b0b0d;
+  --accent: #9be34a;
+  --text: #ffffff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+
+/* stage holds everything centered */
+#stage{
+  position:relative;
+  width:100%;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* center text */
+#centerText{
+  z-index:30;
+  font-size:clamp(28px, 6vw, 84px);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  text-align:center;
+  margin:0;
+  font-weight:700;
+  color:var(--text);
+  text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  pointer-events:none;
+}
+
+/* orbit container is centered and sets the radius */
+#orbit{
+  position:absolute;
+  width:min(75vmin, 900px);
+  height:min(75vmin, 900px);
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:10;
+  /* subtle rotation of whole orbit for dynamism */
+  animation: orbitSlow 18s linear infinite;
+}
+
+/* each bill is absolutely positioned at the top center of the orbit,
+   and then the bill element is rotated around the center by JS/CSS transforms */
+.bill{
+  position:absolute;
+  left:50%;
+  top:8%; /* distance from center - tweak for orbit radius */
+  transform-origin: center -320px; /* large negative y to make it rotate around center */
+  width:64px;
+  height:36px;
+  margin-left:-32px;
+  margin-top:-18px;
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='64' height='36' viewBox='0 0 64 36'>\
+    <rect width='64' height='36' rx='4' fill='%230b6b0b' />\
+    <rect x='4' y='4' width='56' height='28' rx='3' fill='%2316a34a' />\
+    <rect x='8' y='8' width='48' height='20' rx='3' fill='%230b6b0b' />\
+    <text x='32' y='22' font-size='12' font-family='monospace' font-weight='700' fill='%23f3f4f6' text-anchor='middle'>$</text>\
+    <rect x='2' y='2' width='60' height='32' rx='4' stroke='%2310260f' stroke-width='1' fill='none'/>\
+  </svg>");
+  background-repeat:no-repeat;
+  background-size:contain;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,0.45));
+  will-change: transform;
+  animation: billFloat 2.3s ease-in-out infinite;
+  image-rendering: pixelated; /* gives a bit of blocky/pixel vibe when scaled */
+}
+
+/* small offset in each bill's floating animation using nth-child to stagger */
+.bill:nth-child(1){ animation-delay: 0s; }
+.bill:nth-child(2){ animation-delay: -0.2s; }
+.bill:nth-child(3){ animation-delay: -0.4s; }
+.bill:nth-child(4){ animation-delay: -0.6s; }
+.bill:nth-child(5){ animation-delay: -0.8s; }
+.bill:nth-child(6){ animation-delay: -1s; }
+.bill:nth-child(7){ animation-delay: -1.2s; }
+.bill:nth-child(8){ animation-delay: -1.4s; }
+
+/* subtle individual bobbing */
+@keyframes billFloat{
+  0%{ transform: translateY(0) rotate(0deg) }
+  50%{ transform: translateY(-8px) rotate(0deg) }
+  100%{ transform: translateY(0) rotate(0deg) }
+}
+
+/* slow rotation of the whole orbit so bills appear to circle */
+@keyframes orbitSlow{
+  0%{ transform: translate(-50%,-50%) rotate(0deg) }
+  100%{ transform: translate(-50%,-50%) rotate(360deg) }
+}
+
+/* bottom-right X link */
+#xLink{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:60;
+  width:44px;
+  height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.06);
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  transition: transform .14s ease, box-shadow .14s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+#xLink:hover{ transform: translateY(-4px) scale(1.03); box-shadow: 0 9px 28px rgba(0,0,0,0.6); }
+
+/* Responsive: reduce orbit size on smaller screens */
+@media (max-width:640px){
+  .bill{ width:48px; height:28px; margin-left:-24px; margin-top:-14px; }
+  #orbit{ width:80vmin; height:80vmin; }
+}
