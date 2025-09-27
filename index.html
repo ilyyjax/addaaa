@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Exit — Fake Money</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="stage">
+    <h1 id="centerText">Fake Money</h1>
+
+    <!-- Orbit container holds the 8 bills -->
+    <div id="orbit" aria-hidden="true">
+      <!-- We'll create 8 bills; JS will set their rotation offsets -->
+      <div class="bill" id="bill1"></div>
+      <div class="bill" id="bill2"></div>
+      <div class="bill" id="bill3"></div>
+      <div class="bill" id="bill4"></div>
+      <div class="bill" id="bill5"></div>
+      <div class="bill" id="bill6"></div>
+      <div class="bill" id="bill7"></div>
+      <div class="bill" id="bill8"></div>
+    </div>
+
+    <!-- Bottom-right X / social icon -->
+    <a id="xLink" href="https://x.com/i/communities/1972087756521123954" target="_blank" rel="noopener noreferrer" aria-label="Open X community">
+      <!-- simple X icon -->
+      <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+        <path d="M3 3l18 18M21 3L3 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
